@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta http-equiv="content-type" content="text/html" ; charset="utf-8">
+    <meta http-equiv="content-type" content="text/html"; charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>HRTF LAB</title>
 
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -25,50 +26,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 
-    <title>BLOG</title>
+    <title>Bookmark</title>
 </head>
 <body>
 
-<h2>{{ object.title }}</h2>
+    <div id="content">
+        <h1>Bookmark List</h1>
 
-<p class="other_posts">
-    {% if object.get_previous_by_modify_date %}
-        <a href="{{ object.get_previous_post.get_absolute_url }}" title="View previous post">
-            &laquo;--{{ object.get_previous_post }}
-        </a>
-    {% endif %}
-    &nbsp;&nbsp;
-    {% if object.get_next_by_modify_date %}
-        <a href="{{ object.get_next_by_modify_date.get_absolute_url }}" title="View next post">
-            {{ object.get_next_post }}--&raquo;
-        </a>
-    {% endif %}
-</p>
+        <ul>
+            {% for bookmark in object_list %}
+                <li><a href="{% url 'detail' bookmark.id %}">
+                <h3> {{ bookmark|default:"nothing"}}</h3>
+                </a></li>
+            {% endfor %}
+        </ul>
 
-<p class="date">{{ object.modify_date|date:"j F Y" }}</p>
+    </div>
 
-<br/>
-
-<div class="body">
-    {{ object.content|linebreaks }}
-</div>
-<b>TAGS : </b>
-{% load tagging_tags %}
-{% tags_for_object object as tags %}
-{% for tag in tags %}
-    <a href="{% url 'blog:tagged_object_list' tag.name %}">{{ tag.name }}</a>
-{% endfor %}
-
-<a href="{% url 'blog:tag_cloud' %}">[ TagCloud ]</a>
-
-<br/>
-<div>
-    {% load disqus_tags %}
-    {% disqus_show_comments %}
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
 </body>
 </html>

@@ -4,6 +4,9 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from tagging.fields import TagField
+
+
 # Create your models here.
 
 @python_2_unicode_compatible
@@ -16,6 +19,8 @@ class Post(models.Model):
     content = models.TextField('CONTENT')
     create_date = models.DateTimeField('Create Date', auto_now_add=True)
     modify_date = models.DateTimeField('Modify Date', auto_now=True)
+
+    tag = TagField();
 
     class Meta:
         verbose_name = 'post'
@@ -34,18 +39,3 @@ class Post(models.Model):
 
     def get_next_post(self):
         return self.get_next_by_modify_date()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
